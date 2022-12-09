@@ -1,5 +1,15 @@
 # Change branch to see code from basic to standard
 
+# Flow to write new instruction
+
+- 1: Declare state in crate::state
+
+- 2: Declare related account in crate::instructions
+
+- 3: Declare function in crate::instructions
+
+- 4: Declare instruction in crate::lib
+
 # Flow and Note (base on test file)
 
 Note 1: program.provider.publicKey is address of your wallet in your local computer (/home/user/.config/solana)

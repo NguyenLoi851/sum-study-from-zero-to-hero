@@ -1,4 +1,7 @@
 use anchor_lang::prelude::*;
+use instructions::*;
+pub mod state;
+pub mod instructions;
 
 declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 
@@ -7,45 +10,14 @@ pub mod sum {
     use super::*;
 
     pub fn initialize(ctx: Context<Initialize>, value: u64) -> Result<()> {
-        ctx.accounts.sum_account.value = value;
-        Ok(())
+        instructions::initialize_sum::initialize(ctx, value)
     }
 
     pub fn update(ctx: Context<Update>, new_value: u64) -> Result<()> {
-        ctx.accounts.sum_account.value = new_value;
-        Ok(())
+        instructions::update_sum::update(ctx, new_value)
     }
 
     pub fn increase(ctx: Context<Increase>, delta: u64) -> Result<()> {
-        ctx.accounts.sum_account.value += delta;
-        Ok(())
+        instructions::increase_sum::increase(ctx, delta)
     }
-}
-
-#[derive(Accounts)]
-pub struct Initialize<'info>{
-    #[account(init, payer = user, space = 8+8)]
-    pub sum_account: Account<'info, Sum>,
-
-    #[account(mut)]
-    pub user: Signer<'info>,
-
-    pub system_program: Program<'info, System>
-}
-
-#[derive(Accounts)]
-pub struct Update<'info>{
-    #[account(mut)]
-    pub sum_account: Account<'info, Sum>
-}
-
-#[derive(Accounts)]
-pub struct Increase<'info>{
-    #[account(mut)]
-    pub sum_account: Account<'info, Sum>
-}
-
-#[account]
-pub struct Sum{
-    pub value: u64
 }
