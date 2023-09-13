@@ -10,6 +10,10 @@
 
 - 4: Declare instruction in crate::lib
 
+- 5: anchor build
+
+- 6: $ anchor keys list OR $ solana address -k target/deploy/sum-keypair.json to get Program ID and replace in lib.rs
+
 # Flow and Note (base on test file)
 
 Note 1: program.provider.publicKey is address of your wallet in your local computer (/home/user/.config/solana)
@@ -28,8 +32,12 @@ Note 2: This is only keypair of sum account, not an account
 
 - Flow 2.1.2: System Program create new Sum Account and transfer ownership of Sum Account to Sum Program. Then, Sum Program can write to Sum Account.
 
-- Flow 2.2: We need to pass signatures of accounts, which are writable in instruction.
+- Flow 2.2: We need to pass signers, which are writable in instruction.
 
-Note 3: With anchor, we do not need to pass accounts of DEFAULT / PROGRAM user in signatures parts. It will be automatically done by anchor. 
+Note 3: With anchor, we do not need to pass accounts of DEFAULT / PROGRAM user in signatures parts. It will be automatically done by anchor.
 
-Note 4: When creating struct to increase value for Sum Account, if we forget to declare #[account(mut)] for sum_account, test file 
+Note 4: When creating struct to increase value for Sum Account, if we forget to declare #[account(mut)] for sum_account, test file will not return error.
+
+Only work with solana version 1.14.18
+Not work with solana version 1.66.0
+($ solana-install upgrade <version>)
